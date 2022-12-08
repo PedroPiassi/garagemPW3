@@ -1,0 +1,36 @@
+body {
+    background-color: #edf3fa;
+}
+
+div.row {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 100%;
+}
+
+div > #form {
+    padding: 0 6rem;
+}
+
+a, h1 {
+    color: #fe6e04;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+form > button {
+    background-color: #fe6e04;
+    color: #fff;
+    border: 0px;
+    padding: 0.6rem;
+    border-radius: 20%;
+}
