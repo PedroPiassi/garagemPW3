@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/car")
@@ -37,6 +39,11 @@ public class CarController {
         if (carService.findOneByID(id).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
         return ResponseEntity.status(HttpStatus.OK).body(carService.findOneByID(id).get());
+    }
+
+    @GetMapping("/{owner_id}")
+    public ResponseEntity<Object> getOneByOwnerID(@PathVariable(value = "owner_id") UUID owner_id) {
+        return ResponseEntity.status(HttpStatus.OK).body(carService.findByOwnerID(owner_id));
     }
 
     @PostMapping

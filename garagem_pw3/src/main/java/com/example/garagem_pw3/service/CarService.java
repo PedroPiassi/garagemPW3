@@ -38,4 +38,8 @@ public class CarService {
     public boolean existsByPlate(String plate) {
         return carDAO.existsByPlate(plate);
     }
+
+    public List<Car> findByOwnerID(UUID owner_id) {
+        return carDAO.findByOwnerId(owner_id);
+    }
 }
