@@ -1,4 +1,4 @@
-package com.example.garagem_pw3.DAO;
+package com.example.garagem_pw3.DTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

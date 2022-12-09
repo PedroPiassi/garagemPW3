@@ -1,8 +1,7 @@
 package com.example.garagem_pw3.controller;
 
-import com.example.garagem_pw3.DAO.CarDTO;
+import com.example.garagem_pw3.DTO.CarDTO;
 import com.example.garagem_pw3.domain.Car;
-import com.example.garagem_pw3.domain.Client;
 import com.example.garagem_pw3.service.CarService;
 import com.example.garagem_pw3.service.ClientService;
 import org.springframework.beans.BeanUtils;

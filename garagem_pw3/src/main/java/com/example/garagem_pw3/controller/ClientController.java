@@ -1,6 +1,7 @@
 package com.example.garagem_pw3.controller;
 
-import com.example.garagem_pw3.DAO.ClientDTO;
+import com.example.garagem_pw3.DTO.ClientDTO;
+import com.example.garagem_pw3.DTO.LoginDTO;
 import com.example.garagem_pw3.domain.Client;
 import com.example.garagem_pw3.service.ClientService;
 import org.springframework.beans.BeanUtils;
@@ -37,22 +38,37 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ClientDTO clientDTO) {
-        if (clientService.existsByEmail(clientDTO.getEmail()))
+        if (clientService.findOneByEmail(clientDTO.getEmail()).isPresent())
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
+        if (clientService.existsByCpf(clientDTO.getCpf()))
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF already exists");
 
         var client = new Client();
         BeanUtils.copyProperties(clientDTO, client);
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(client));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Object> getOneByEmail(@RequestBody @Valid LoginDTO loginDTO) {
+        if (clientService.findOneByEmail(loginDTO.getEmail()).isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
+
+        var client = clientService.findOneByEmail(loginDTO.getEmail()).get();
+
+        if (loginDTO.getPassword().equals(client.getPassword()))
+            return ResponseEntity.status(HttpStatus.OK).body(client);
+        else
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Invalid password");
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") UUID id, @RequestBody @Valid ClientDTO clientDTO) {
         if (clientService.findOneByID(id).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
+
         var client = clientService.findOneByID(id).get();
+        client.setId(id);
         client.setName(clientDTO.getName());
-        client.setEmail(clientDTO.getEmail());
-        client.setCpf(clientDTO.getCpf());
         client.setPhone(clientDTO.getPhone());
         client.setAddress(clientDTO.getAddress());
         client.setPassword(clientDTO.getPassword());

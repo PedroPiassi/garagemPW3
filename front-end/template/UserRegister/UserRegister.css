@@ -5,11 +5,6 @@ body {
   align-items: center;
   background-color: #edf3fa;
 }
-.form-div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 a,
 h1 {
   color: #fe6e04;
@@ -19,7 +14,7 @@ a:hover {
   color: black;
 }
 
-.btn-login {
+.btn-save {
   width: 100%;
   background-color: #fe6e04;
   color: #fff;

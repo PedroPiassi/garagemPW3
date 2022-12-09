@@ -30,12 +30,16 @@ public class ClientService {
         return clientDAO.findById(id);
     }
 
+    public Optional<Client> findOneByEmail(String email) {
+        return clientDAO.findOneByEmail(email);
+    }
+
     @Transactional
     public void delete(Client client) {
         clientDAO.delete(client);
     }
 
-    public boolean existsByEmail(String email) {
-        return clientDAO.existsByEmail(email);
+    public boolean existsByCpf(String cpf) {
+        return clientDAO.existsByCpf(cpf);
     }
 }

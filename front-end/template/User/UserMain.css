@@ -5,25 +5,19 @@ body {
   align-items: center;
   background-color: #edf3fa;
 }
-.form-div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-a,
 h1 {
   color: #fe6e04;
   text-decoration: none;
 }
-a:hover {
-  color: black;
-}
-
-.btn-login {
-  width: 100%;
+.btn {
   background-color: #fe6e04;
   color: #fff;
   border: 0px;
   padding: 0.6rem;
   border-radius: 0.4rem;
+}
+
+div > #options {
+  display: flex;
+  justify-content: flex-end;
 }

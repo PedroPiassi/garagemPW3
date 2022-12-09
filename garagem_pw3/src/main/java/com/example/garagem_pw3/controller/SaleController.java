@@ -1,6 +1,6 @@
 package com.example.garagem_pw3.controller;
 
-import com.example.garagem_pw3.DAO.SaleDTO;
+import com.example.garagem_pw3.DTO.SaleDTO;
 import com.example.garagem_pw3.domain.Sale;
 import com.example.garagem_pw3.service.CarService;
 import com.example.garagem_pw3.service.ClientService;
