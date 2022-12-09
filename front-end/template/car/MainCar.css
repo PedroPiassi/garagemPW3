@@ -1,0 +1,16 @@
+body {
+    background-color: #edf3fa;
+}
+
+h1 {
+    text-align: center;
+    color: #fe6e04;
+}
+
+button {
+    background-color: #fe6e04;
+    color: #fff;
+    border: 0px;
+    padding: 0.6rem;
+    border-radius: 20%;
+}
