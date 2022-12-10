@@ -3,6 +3,7 @@ package com.example.garagem_pw3.domain;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +27,8 @@ public class Client implements Serializable {
     private String address;
     @Column(nullable = false)
     private String password;
+    @OneToMany(mappedBy = "owner")
+    private List<Car> cars;
 
     public UUID getId() {
         return id;

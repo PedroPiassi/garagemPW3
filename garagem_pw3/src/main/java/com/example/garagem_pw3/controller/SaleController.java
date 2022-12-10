@@ -53,7 +53,7 @@ public class SaleController {
     public ResponseEntity<Object> updateSale(@PathVariable(value = "id") UUID id, @RequestBody @Valid SaleDTO saleDTO) {
         if (saleService.findOneByID(id).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sale not found");
-        if (carService.findOneByID(saleDTO.getCar_id()).isEmpty())
+        if (carService.findByID(saleDTO.getCar_id()).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
         if (clientService.findOneByID(saleDTO.getBuyer_id()).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
@@ -61,7 +61,7 @@ public class SaleController {
         var sale = saleService.findOneByID(id).get();
         sale.setDate(saleDTO.getDate());
         sale.setValue(saleDTO.getValue());
-        sale.setCar(carService.findOneByID(saleDTO.getCar_id()).get());
+        sale.setCar(carService.findByID(saleDTO.getCar_id()).get());
         sale.setBuyer(clientService.findOneByID(saleDTO.getBuyer_id()).get());
 
         return ResponseEntity.status(HttpStatus.OK).body(saleService.save(sale));

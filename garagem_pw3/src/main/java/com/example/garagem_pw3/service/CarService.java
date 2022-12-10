@@ -26,7 +26,7 @@ public class CarService {
         return carDAO.findAll();
     }
 
-    public Optional<Car> findOneByID(UUID id) {
+    public Optional<Car> findByID(UUID id) {
         return carDAO.findById(id);
     }
 

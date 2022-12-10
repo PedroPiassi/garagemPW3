@@ -30,8 +30,8 @@ public class ClientService {
         return clientDAO.findById(id);
     }
 
-    public Optional<Client> findOneByEmail(String email) {
-        return clientDAO.findOneByEmail(email);
+    public Optional<Client> findByEmail(String email) {
+        return clientDAO.findByEmail(email);
     }
 
     @Transactional

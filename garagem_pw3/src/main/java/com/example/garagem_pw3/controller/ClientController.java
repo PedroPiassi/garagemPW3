@@ -3,6 +3,7 @@ package com.example.garagem_pw3.controller;
 import com.example.garagem_pw3.DTO.ClientDTO;
 import com.example.garagem_pw3.DTO.LoginDTO;
 import com.example.garagem_pw3.domain.Client;
+import com.example.garagem_pw3.service.CarService;
 import com.example.garagem_pw3.service.ClientService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,12 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/client")
 public class ClientController {
-    final ClientService clientService;
+     final ClientService clientService;
+    final CarService carService;
 
-    public ClientController (ClientService clientService) {
+    public ClientController (ClientService clientService, CarService carService) {
         this.clientService = clientService;
+        this.carService = carService;
     }
 
     @GetMapping
@@ -38,7 +41,7 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ClientDTO clientDTO) {
-        if (clientService.findOneByEmail(clientDTO.getEmail()).isPresent())
+        if (clientService.findByEmail(clientDTO.getEmail()).isPresent())
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
         if (clientService.existsByCpf(clientDTO.getCpf()))
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF already exists");
@@ -50,10 +53,10 @@ public class ClientController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> getOneByEmail(@RequestBody @Valid LoginDTO loginDTO) {
-        if (clientService.findOneByEmail(loginDTO.getEmail()).isEmpty())
+        if (clientService.findByEmail(loginDTO.getEmail()).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
 
-        var client = clientService.findOneByEmail(loginDTO.getEmail()).get();
+        var client = clientService.findByEmail(loginDTO.getEmail()).get();
 
         if (loginDTO.getPassword().equals(client.getPassword()))
             return ResponseEntity.status(HttpStatus.OK).body(client);

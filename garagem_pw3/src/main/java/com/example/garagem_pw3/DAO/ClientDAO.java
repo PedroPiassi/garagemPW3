@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface ClientDAO extends JpaRepository<Client, UUID> {
-    Optional<Client> findOneByEmail(String email);
+    Optional<Client> findByEmail(String email);
 
     boolean existsByCpf(String cpf);
 }

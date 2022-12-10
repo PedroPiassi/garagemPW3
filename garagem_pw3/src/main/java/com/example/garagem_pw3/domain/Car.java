@@ -30,7 +30,7 @@ public class Car implements Serializable {
     @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,##0.00")
     @Column(nullable = false, columnDefinition = "DECIMAL(12,2) DEFAULT 0.00")
     private BigDecimal price;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "owner_id")
     private Client owner;
 

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/car")
@@ -36,12 +34,12 @@ public class CarController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneCar(@PathVariable(value = "id") UUID id) {
-        if (carService.findOneByID(id).isEmpty())
+        if (carService.findByID(id).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
-        return ResponseEntity.status(HttpStatus.OK).body(carService.findOneByID(id).get());
+        return ResponseEntity.status(HttpStatus.OK).body(carService.findByID(id).get());
     }
 
-    @GetMapping("/{owner_id}")
+    @GetMapping("/owner_cars/{owner_id}")
     public ResponseEntity<Object> getOneByOwnerID(@PathVariable(value = "owner_id") UUID owner_id) {
         return ResponseEntity.status(HttpStatus.OK).body(carService.findByOwnerID(owner_id));
     }
@@ -55,28 +53,31 @@ public class CarController {
 
         var car = new Car();
         BeanUtils.copyProperties(carDTO, car);
+        car.setOwner(clientService.findOneByID(carDTO.getOwner_id()).get());
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.save(car));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarDTO carDTO) {
-        if (carService.findOneByID(id).isEmpty())
+        if (carService.findByID(id).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
         if (clientService.findOneByID(carDTO.getOwner_id()).isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner not found");
 
-        var car = carService.findOneByID(id).get();
+        var car = carService.findByID(id).get();
+        car.setId(id);
         car.setName(carDTO.getName());
         car.setBrand(carDTO.getBrand());
         car.setYear(carDTO.getYear());
         car.setKmTraveled(carDTO.getKmTraveled());
+        car.setPrice(carDTO.getPrice());
 
         return ResponseEntity.status(HttpStatus.OK).body(carService.save(car));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCar(@PathVariable(value = "id") UUID id) {
-        Optional<Car> optionalCar = carService.findOneByID(id);
+        Optional<Car> optionalCar = carService.findByID(id);
         if (optionalCar.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
         carService.delete(optionalCar.get());
